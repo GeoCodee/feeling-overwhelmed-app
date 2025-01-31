@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 
 const TAGS = ["Work", "Personal", "Urgent", "Home"];
 
-export function TaskInput({onAdd} : { onadd:(task:string,tags:string[])=> void}){
+export function TaskInput({onAdd} : { onAdd:(task:string,tags:string[])=> void}){
     const[input, setInput] = useState('');
     const[selectedTags, setSelectedTags] = useState<string[]>([]);
 

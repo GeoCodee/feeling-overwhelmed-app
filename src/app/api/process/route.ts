@@ -5,8 +5,14 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+interface Task {
+    id: string;
+    text: string;
+  }
+  
+
 export async function POST(req: Request) {
-  const { tasks } = await req.json();
+  const { tasks } : {tasks: Task[]}= await req.json();
   
   try {
     const completion = await openai.chat.completions.create({
@@ -17,16 +23,17 @@ export async function POST(req: Request) {
         Return JSON format: { prioritized: { id: string, priority: number }[], suggestions: string[] }`
       }, {
         role: "user",
-        content: `Tasks: ${tasks.map((t: any) => t.text).join(', ')}`
+        content: `Tasks: ${tasks.map(t => t.text).join(', ')}`
       }]
     });
 
     const result = JSON.parse(completion.choices[0].message.content || '{}');
     return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'AI processing failed' },
-      { status: 500 }
+        console.error('AI Processing error:', error);
+        return NextResponse.json(
+            { error: 'AI processing failed' },
+            { status: 500 }
     );
   }
 }

@@ -5,9 +5,15 @@ import { Task } from '@/app/types/types';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { TrashIcon } from '@radix-ui/react-icons';
+import { Dispatch, SetStateAction } from 'react';
 
-export function SortableItem({ id, task, setTasks }: { id: string, task: Task, setTasks: any }) {
-  const {
+export function SortableItem({ id, task, setTasks }: { 
+    id: string, 
+    task: Task, 
+    setTasks: Dispatch<SetStateAction<Task[]>>
+  }){
+  
+const {
     attributes,
     listeners,
     setNodeRef,

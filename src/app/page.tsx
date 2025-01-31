@@ -11,7 +11,10 @@ import axios from 'axios';
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [aiResults, setAiResults] = useState<{ prioritized: any[], suggestions: string[] } | null>(null);
+  const [aiResults, setAiResults] = useState<{ 
+    prioritized: Array<{id:string, priority:number}>, 
+    suggestions: string[] 
+  } | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Load tasks from localStorage
@@ -72,7 +75,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {aiResults.prioritized.map((task) => (
+                {aiResults.prioritized?.map((task) => (
                   <tr key={task.id}>
                     <td>{tasks.find(t => t.id === task.id)?.text}</td>
                     <td>{task.priority}/10</td>
